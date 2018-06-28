@@ -1,8 +1,10 @@
 package ciuy
 
 import (
+	"math/rand"
 	"regexp"
 	"strconv"
+	"time"
 )
 
 // ValidationDigit returns the validation digit given a string for a number
@@ -47,4 +49,14 @@ func ValidateCi(ci string) bool {
 	dig := string(ci[len(ci)-1])
 	ci = ci[0 : len(ci)-1]
 	return ValidationDigit(ci) == dig
+}
+
+// Random creates a random valid Ci number
+func Random() string {
+	rand.Seed(time.Now().Unix())
+	max := 9999999
+	min := 1000000
+	ci := strconv.Itoa(rand.Intn(max-min) + min)
+	result := ci + ValidationDigit(ci)
+	return result
 }

@@ -85,3 +85,13 @@ var _ = Describe("Validate Ci", func() {
 		})
 	})
 })
+
+var _ = Describe("Random number", func() {
+	Context("Creating a random ci number", func() {
+		It("returns a valid random number", func() {
+			ci := ciuy.Random()
+			Expect(ciuy.ValidateCi(ci)).To(Equal(true))
+		})
+	})
+
+})
