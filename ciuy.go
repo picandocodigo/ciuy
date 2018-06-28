@@ -37,3 +37,14 @@ func Transform(ci string) string {
 	cleanCi := re.ReplaceAllString(ci, "")
 	return cleanCi
 }
+
+// ValidateCi gets a Ci string and returns a bool
+func ValidateCi(ci string) bool {
+	ci = Transform(ci)
+	if len(ci) < 6 {
+		return false
+	}
+	dig := string(ci[len(ci)-1])
+	ci = ci[0 : len(ci)-1]
+	return ValidationDigit(ci) == dig
+}

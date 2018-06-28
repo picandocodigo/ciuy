@@ -34,7 +34,7 @@ var _ = Describe("Validation Digit", func() {
 	})
 })
 
-var _ = Describe("Transform cis", func() {
+var _ = Describe("Transform Ci", func() {
 	Context("given a dirty string", func() {
 		It("returns just the digits for dots", func() {
 			ci := ciuy.Transform("1.111.111-1")
@@ -50,6 +50,38 @@ var _ = Describe("Transform cis", func() {
 			ci := ciuy.Transform("3.333.333/3")
 			expected := "33333333"
 			Expect(ci).To(Equal(expected))
+		})
+	})
+})
+
+var _ = Describe("Validate Ci", func() {
+	Context("Correct Ci numbers", func() {
+		It("validates a right CI", func() {
+			ci := "1.111.111-1"
+			result := ciuy.ValidateCi(ci)
+			Expect(result).To(Equal(true))
+		})
+		It("validates a random right CI", func() {
+			ci := "9.575.350/3"
+			result := ciuy.ValidateCi(ci)
+			Expect(result).To(Equal(true))
+		})
+		It("validates cis with 6 digits", func() {
+			ci := "111,111_3"
+			result := ciuy.ValidateCi(ci)
+			Expect(result).To(Equal(true))
+		})
+	})
+	Context("Wrong Ci numbers are not valid", func() {
+		It("Doesn't validate a wrong Ci", func() {
+			ci := "1.111.111-4"
+			result := ciuy.ValidateCi(ci)
+			Expect(result).To(Equal(false))
+		})
+		It("Does not validate a wrong random ci", func() {
+			ci := "9.575.350/8"
+			result := ciuy.ValidateCi(ci)
+			Expect(result).To(Equal(false))
 		})
 	})
 })
