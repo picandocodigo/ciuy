@@ -35,9 +35,8 @@ func ValidationDigit(blob string) string {
 
 // Transform receives a string with mixed characters returns the digits as a string
 func Transform(ci string) string {
-	re := regexp.MustCompile(`[^\d]`)
-	cleanCi := re.ReplaceAllString(ci, "")
-	return cleanCi
+	re := regexp.MustCompile(`\D`)
+	return re.ReplaceAllString(ci, "")
 }
 
 // ValidateCi gets a Ci string and returns a bool
