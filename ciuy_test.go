@@ -16,24 +16,29 @@ func TestCiUyFunc(t *testing.T) {
 var _ = Describe("Validation Digit", func() {
 	Context("given an initial ci", func() {
 		It("returns the validation digit for random ci", func() {
-			digit := ciuy.ValidationDigit("6098714")
+			digit, err := ciuy.ValidationDigit("6098714")
+			Expect(err).To(BeNil())
 			Expect(digit).To(Equal("9"))
 		})
 		It("returns the validation digit for another random ci", func() {
-			digit := ciuy.ValidationDigit("9575350")
+			digit, err := ciuy.ValidationDigit("9575350")
+			Expect(err).To(BeNil())
 			Expect(digit).To(Equal("3"))
 		})
-		It("returns the validation digit for 1", func() {
-			digit := ciuy.ValidationDigit("1111111")
+		It("returns the validation digit for 1111111", func() {
+			digit, err := ciuy.ValidationDigit("1111111")
+			Expect(err).To(BeNil())
 			Expect(digit).To(Equal("1"))
 		})
-		It("returns the validation digit for 2", func() {
-			digit := ciuy.ValidationDigit("2222222")
+		It("returns the validation digit for 2222222", func() {
+			digit, err := ciuy.ValidationDigit("2222222")
+			Expect(err).To(BeNil())
 			Expect(digit).To(Equal("2"))
 		})
-		It("returns the validation digit for 3720651", func() {
+		It("returns the validation digit for 3.720.651", func() {
 			ci := "3720651"
-			digit := ciuy.ValidationDigit(ci)
+			digit, err := ciuy.ValidationDigit(ci)
+			Expect(err).To(BeNil())
 			Expect(digit).To(Equal("0"))
 		})
 	})

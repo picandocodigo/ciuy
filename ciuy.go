@@ -8,7 +8,7 @@ import (
 )
 
 // ValidationDigit returns the validation digit given a string for a number
-func ValidationDigit(blob string) string {
+func ValidationDigit(blob string) (string, error) {
 	ci := Transform(blob)
 	if len(ci) == 6 {
 		ci = "0" + ci
@@ -18,14 +18,14 @@ func ValidationDigit(blob string) string {
 	for index, digit := range validationAlg {
 		ciDigit, err := strconv.Atoi(string(ci[index]))
 		if err != nil {
-			panic("FML!")
+			return "", err
 		}
 		a += digit * ciDigit
 	}
 	if mod := a % 10; mod != 0 {
-		return strconv.Itoa(10 - mod)
+		return strconv.Itoa(10 - mod), nil
 	}
-	return "0"
+	return "0", nil
 }
 
 // Transform receives a string with mixed characters returns the digits as a string
@@ -42,7 +42,8 @@ func ValidateCi(ci string) bool {
 	}
 	dig := string(ci[len(ci)-1])
 	ci = ci[0 : len(ci)-1]
-	return ValidationDigit(ci) == dig
+	digit, err := ValidationDigit(ci)
+	return err == nil && digit == dig
 }
 
 // Random creates a random valid Ci number
@@ -51,6 +52,9 @@ func Random() string {
 	max := 9999999
 	min := 1000000
 	ci := strconv.Itoa(rand.Intn(max-min) + min)
-	result := ci + ValidationDigit(ci)
-	return result
+	digit, err := ValidationDigit(ci)
+	if err != nil {
+		panic("FML!")
+	}
+	return ci + digit
 }
