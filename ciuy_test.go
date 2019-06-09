@@ -59,29 +59,29 @@ var _ = Describe("Validate Ci", func() {
 		It("validates a right CI", func() {
 			ci := "1.111.111-1"
 			result := ciuy.ValidateCi(ci)
-			Expect(result).To(Equal(true))
+			Expect(result).To(BeTrue())
 		})
 		It("validates a random right CI", func() {
 			ci := "9.575.350/3"
 			result := ciuy.ValidateCi(ci)
-			Expect(result).To(Equal(true))
+			Expect(result).To(BeTrue())
 		})
 		It("validates cis with 6 digits", func() {
 			ci := "111,111_3"
 			result := ciuy.ValidateCi(ci)
-			Expect(result).To(Equal(true))
+			Expect(result).To(BeTrue())
 		})
 	})
 	Context("Wrong Ci numbers are not valid", func() {
 		It("Doesn't validate a wrong Ci", func() {
 			ci := "1.111.111-4"
 			result := ciuy.ValidateCi(ci)
-			Expect(result).To(Equal(false))
+			Expect(result).ToNot(BeTrue())
 		})
 		It("Does not validate a wrong random ci", func() {
 			ci := "9.575.350/8"
 			result := ciuy.ValidateCi(ci)
-			Expect(result).To(Equal(false))
+			Expect(result).ToNot(BeTrue())
 		})
 	})
 })
@@ -90,7 +90,7 @@ var _ = Describe("Random number", func() {
 	Context("Creating a random ci number", func() {
 		It("returns a valid random number", func() {
 			ci := ciuy.Random()
-			Expect(ciuy.ValidateCi(ci)).To(Equal(true))
+			Expect(ciuy.ValidateCi(ci)).To(BeTrue(), "%s must be valid", ci)
 		})
 	})
 
