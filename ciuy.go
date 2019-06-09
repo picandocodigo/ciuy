@@ -14,23 +14,18 @@ func ValidationDigit(blob string) string {
 		ci = "0" + ci
 	}
 	a := 0
-	validationAlg := "2987634"
-	var validationDigit, ciDigit int
-	var err error
+	validationAlg := []int{2, 9, 8, 7, 6, 3, 4}
 	for index, digit := range validationAlg {
-		validationDigit, err = strconv.Atoi(string(digit))
+		ciDigit, err := strconv.Atoi(string(ci[index]))
 		if err != nil {
 			panic("FML!")
 		}
-		ciDigit, err = strconv.Atoi(string(ci[index]))
-		if err != nil {
-			panic("FML!")
-		}
-		a += validationDigit * ciDigit
+		a += digit * ciDigit
 	}
-	validationDigit = (10 - (a % 10))
-	digitString := strconv.Itoa(validationDigit)
-	return digitString
+	if mod := a % 10; mod != 0 {
+		return strconv.Itoa(10 - mod)
+	}
+	return "0"
 }
 
 // Transform receives a string with mixed characters returns the digits as a string

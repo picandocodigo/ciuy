@@ -31,6 +31,11 @@ var _ = Describe("Validation Digit", func() {
 			digit := ciuy.ValidationDigit("2222222")
 			Expect(digit).To(Equal("2"))
 		})
+		It("returns the validation digit for 3720651", func() {
+			ci := "3720651"
+			digit := ciuy.ValidationDigit(ci)
+			Expect(digit).To(Equal("0"))
+		})
 	})
 })
 
